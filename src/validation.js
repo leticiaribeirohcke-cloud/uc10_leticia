@@ -1,37 +1,39 @@
-/* validation.js — validação dos dados
-Verifica se o título foi informado, remove espaços desnecessários e impede títulos com mais de 120 caracteres. Evita que dados inválidos sejam enviados para o banco. */
+
+// validation.js — validação dos dados
+// Verifica se o título foi informado, remove espaços desnecessários
+// e impede títulos com mais de 120 caracteres.
+// Evita que dados inválidos sejam enviados para o banco.
 
 // Se o título for uma string, remove os espaços em branco
 // Senão, retorna uma string vazia
 function normalizeTitle(title) {
-  return typeof title === 'string' ? title.trim() : '';
+    return typeof title === 'string' ? title.trim() : '';
 }
 
 // Valida o título e a descrição da tarefa
 function validateTaskInput(input) {
-  E1: "segunda-feira"
-  E2: "                  terça-feira" = "terça-feira"
-  E3: ""
-  E4: ""
- 
-// Normaliza o título usando a função normalizeTitle
-  const title = normalizeTitle(input?.title);
 
-  if (!title) {
-    throw new Error('O título da tarefa é obrigatório.');
-  }
+    // Normaliza o título usando a função normalizeTitle
+    const title = normalizeTitle(input?.title);
 
-  // Verifica se o título tem mais de 120 caracteres
-  if (title.length > 120) {
-    throw new Error('O título deve ter no máximo 120 caracteres.');
-  }
+    // Verifica se o título foi informado
+    if (!title) {
+        throw new Error('O título da tarefa é obrigatório.');
+    }
 
-  const description = typeof input?.description === 'string'
-    ? input.description.trim()
-    : '';
+    // Verifica se o título tem mais de 120 caracteres
+    if (title.length > 120) {
+        throw new Error('O título deve ter no máximo 120 caracteres.');
+    }
 
-  return { valid: true, data: { title, description } };
+    // Normaliza a descrição, removendo espaços desnecessários
+    const description = typeof input?.description === 'string'
+        ? input.description.trim()
+        : '';
+
+    // Retorna os dados validados
+    return { valid: true, data: { title, description } };
 }
 
-// Exporta as duas funções para que elas possam ser usadas em outros arquivos do seu projeto Node.js
+// Exporta as duas funções para serem usadas em outros arquivos
 module.exports = { normalizeTitle, validateTaskInput };
